@@ -1,11 +1,14 @@
 package com.weattech.boot.jwt.core;
 
+import lombok.Data;
+
 /**
  * Jwt 用户信息载体类
  *
  * @author zhangyan
  * @since 2023/2/14
  */
+@Data
 public class JwtPayload {
 
     private Long userId;
@@ -24,19 +27,4 @@ public class JwtPayload {
         this.loginSign = loginSign;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getLoginSign() {
-        return loginSign;
-    }
-
-    public void setLoginSign(String loginSign) {
-        this.loginSign = loginSign;
-    }
 }

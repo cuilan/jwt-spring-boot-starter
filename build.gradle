@@ -24,7 +24,14 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
 
+    // lombok
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+
+    // test
     testCompileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springVersion
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
 }
 
 publishing {

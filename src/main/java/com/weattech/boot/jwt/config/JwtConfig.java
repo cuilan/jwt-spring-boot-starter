@@ -1,5 +1,6 @@
 package com.weattech.boot.jwt.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
  * @author zhangyan
  * @since 2023/2/14
  */
+@Data
 @Component
 @ConfigurationProperties(prefix = "weattech.jwt")
 public class JwtConfig {
@@ -24,6 +26,11 @@ public class JwtConfig {
     private String base64Secret;
 
     /**
+     * 加密签名算法
+     */
+    private String algo;
+
+    /**
      * 过期时间，单位秒
      */
     private Long expiresSecond = 3600L;
@@ -37,27 +44,11 @@ public class JwtConfig {
         this.expiresSecond = expiresSecond;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public JwtConfig(String id, String base64Secret, String algo, Long expiresSecond) {
         this.id = id;
-    }
-
-    public String getBase64Secret() {
-        return base64Secret;
-    }
-
-    public void setBase64Secret(String base64Secret) {
         this.base64Secret = base64Secret;
-    }
-
-    public Long getExpiresSecond() {
-        return expiresSecond;
-    }
-
-    public void setExpiresSecond(Long expiresSecond) {
+        this.algo = algo;
         this.expiresSecond = expiresSecond;
     }
+
 }

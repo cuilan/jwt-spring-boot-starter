@@ -20,22 +20,60 @@ import java.util.stream.Collectors;
  */
 public class JwtService {
 
+    // Header Algorithm key
+    private static final String ALG_KEY = "alg";
+
     @Resource
     private JwtConfig jwtConfig;
+
+    public <T> String createJwt(String userId, T payloadBean) {
+        String algo = jwtConfig.getAlgo();
+        if (algo == null || algo.isEmpty()) {
+            return createJwt(userId, payloadBean, SignatureAlgorithm.HS256);
+        }
+        algo = algo.toUpperCase();
+        switch (algo) {
+            case "NONE":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.NONE);
+            case "HS384":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.HS384);
+            case "HS512":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.HS512);
+            case "RS256":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.RS256);
+            case "RS384":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.RS384);
+            case "RS512":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.RS512);
+            case "ES256":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.ES256);
+            case "ES384":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.ES384);
+            case "ES512":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.ES512);
+            case "PS256":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.PS256);
+            case "PS384":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.PS384);
+            case "PS512":
+                return createJwt(userId, payloadBean, SignatureAlgorithm.PS512);
+            case "HS256":
+            default:
+                return createJwt(userId, payloadBean, SignatureAlgorithm.HS256);
+        }
+    }
 
     /**
      * 创建JWT加密字符串
      *
-     * @param userId      用户id
-     * @param payloadBean 用户信息载体对象
-     * @param <T>         用户信息载体对象
+     * @param userId             用户id
+     * @param payloadBean        用户信息载体对象
+     * @param <T>                用户信息载体对象
+     * @param signatureAlgorithm 签名算法
      * @return JWT 加密字符串
      */
-    public <T> String createJwt(String userId, T payloadBean) {
-
-        // 指定签名的时候使用的签名算法，也就是header那部分，jjwt已经将这部分内容封装好了。
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-        // 生成JWT的时间
+    public <T> String createJwt(String userId, T payloadBean, SignatureAlgorithm signatureAlgorithm) {
+        // Issued At 生成JWT的时间
         Date iat = new Date();
         long ttlMillIn = iat.getTime() + jwtConfig.getExpiresSecond() * 1000;
         // 创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
@@ -50,14 +88,15 @@ public class JwtService {
                     .filter(n -> n.getValue() != null)
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new JwtException(e.getMessage());
         }
-
         JwtBuilder builder = Jwts.builder()
-                // 设置jti(JWT ID)：是JWT的唯一标识，根据业务需要，这个可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击。
+                // 设置类型为JWT
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+                // 设置签名算法
+                .setHeaderParam(ALG_KEY, signatureAlgorithm.getValue())
+                // 设置JWT id
                 .setId(jwtConfig.getId())
-                .setHeaderParam("typ", "JWT")
-                .setHeaderParam("alg", signatureAlgorithm.getValue())
                 // 如果有私有声明，一定要先设置这个自己创建的私有的声明，这个是给builder的claim赋值，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明的
                 .setClaims(map)
                 // iat: jwt的签发时间
