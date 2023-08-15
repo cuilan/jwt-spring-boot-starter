@@ -1,0 +1,72 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+java {
+    // 指定编译器版本
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    // 指定目标版本
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+group = 'com.weattech.boot'
+version = '1.0.1'
+
+def springVersion = '2.7.6'
+
+dependencies {
+    // spring boot
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: springVersion
+
+    // tools
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+
+    testCompileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springVersion
+}
+
+publishing {
+    publications {
+        Jar(MavenPublication) {
+            from components.java
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+        }
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            name "weattech-group"
+            url "https://nexus.weattech.com/repository/weattech-releases/"
+            credentials {
+                username 'weattech'
+                password 'WeattechDev'
+            }
+        }
+        maven {
+            name "weattech-releases"
+            url "https://nexus.weattech.com/repository/weattech-releases/"
+            credentials {
+                username 'weattech'
+                password 'WeattechDev'
+            }
+        }
+        maven {
+            name "weattech-snapshots"
+            url "https://nexus.weattech.com/repository/weattech-snapshots/"
+            credentials {
+                username 'weattech'
+                password 'WeattechDev'
+            }
+        }
+    }
+}
+
+//println(project.group)
+//println(project.name)
+//println(project.version)
+//println(java.sourceCompatibility)
+//println(java.targetCompatibility)

@@ -6,8 +6,8 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,7 +41,7 @@ public class JwtService {
         // 创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
 
         // 生成签名密钥
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(jwtConfig.getBase64Secret());
+        byte[] apiKeySecretBytes = Base64.getDecoder().decode(jwtConfig.getBase64Secret());
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         Map<String, Object> map;
@@ -84,7 +84,7 @@ public class JwtService {
      */
     private Claims parseJWT(String jsonWebToken, String base64Security) {
         return Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(base64Security))
+                .setSigningKey(Base64.getDecoder().decode(base64Security))
                 .parseClaimsJws(jsonWebToken).getBody();
     }
 
