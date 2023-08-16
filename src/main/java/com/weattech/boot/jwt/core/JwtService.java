@@ -1,10 +1,11 @@
 package com.weattech.boot.jwt.core;
 
-import com.weattech.boot.jwt.config.JwtConfig;
+import com.weattech.boot.jwt.config.JwtProperties;
+import com.weattech.boot.jwt.exceptions.TokenException;
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
 
-import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Base64;
@@ -18,16 +19,16 @@ import java.util.stream.Collectors;
  * @author zhangyan
  * @since 2023/2/14
  */
+@RequiredArgsConstructor
 public class JwtService {
 
     // Header Algorithm key
     private static final String ALG_KEY = "alg";
 
-    @Resource
-    private JwtConfig jwtConfig;
+    private final JwtProperties jwtProperties;
 
     public <T> String createJwt(String userId, T payloadBean) {
-        String algo = jwtConfig.getAlgo();
+        String algo = jwtProperties.getAlgo();
         if (algo == null || algo.isEmpty()) {
             return createJwt(userId, payloadBean, SignatureAlgorithm.HS256);
         }
@@ -75,11 +76,11 @@ public class JwtService {
     public <T> String createJwt(String userId, T payloadBean, SignatureAlgorithm signatureAlgorithm) {
         // Issued At 生成JWT的时间
         Date iat = new Date();
-        long ttlMillIn = iat.getTime() + jwtConfig.getExpiresSecond() * 1000;
+        long ttlMillIn = iat.getTime() + jwtProperties.getExpiresSecond() * 1000;
         // 创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
 
         // 生成签名密钥
-        byte[] apiKeySecretBytes = Base64.getDecoder().decode(jwtConfig.getBase64Secret());
+        byte[] apiKeySecretBytes = Base64.getDecoder().decode(jwtProperties.getBase64Secret());
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         Map<String, Object> map;
@@ -88,7 +89,7 @@ public class JwtService {
                     .filter(n -> n.getValue() != null)
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         } catch (Exception e) {
-            throw new JwtException(e.getMessage());
+            throw new TokenException(e.getMessage());
         }
         JwtBuilder builder = Jwts.builder()
                 // 设置类型为JWT
@@ -96,7 +97,7 @@ public class JwtService {
                 // 设置签名算法
                 .setHeaderParam(ALG_KEY, signatureAlgorithm.getValue())
                 // 设置JWT id
-                .setId(jwtConfig.getId())
+                .setId(jwtProperties.getId())
                 // 如果有私有声明，一定要先设置这个自己创建的私有的声明，这个是给builder的claim赋值，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明的
                 .setClaims(map)
                 // iat: jwt的签发时间
@@ -137,15 +138,15 @@ public class JwtService {
      */
     public <T> T getPayload(String token, Class<T> payloadClass) {
         try {
-            Claims claims = parseJWT(token, jwtConfig.getBase64Secret());
+            Claims claims = parseJWT(token, jwtProperties.getBase64Secret());
             if (claims.getExpiration().before(new Date())) {
-                throw new JwtException("JWT 时间过期");
+                throw new TokenException("JWT 时间过期");
             }
             T t = payloadClass.getDeclaredConstructor().newInstance();
             BeanUtils.populate(t, claims);
             return t;
         } catch (Exception e) {
-            throw new JwtException(e.getMessage(), e.getCause());
+            throw new TokenException(e.getMessage(), e.getCause());
         }
     }
 

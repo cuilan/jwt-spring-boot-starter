@@ -12,8 +12,14 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "weattech.jwt")
-public class JwtConfig {
+@ConfigurationProperties(prefix = JwtProperties.PREFIX)
+public class JwtProperties {
+
+    /**
+     * 配置文件前缀
+     */
+    public static final String PREFIX = "weattech.jwt";
+    public static final String BASE64_SECRET_NAME = "base64Secret";
 
     /**
      * jwt唯一id
@@ -35,16 +41,16 @@ public class JwtConfig {
      */
     private Long expiresSecond = 3600L;
 
-    public JwtConfig() {
+    public JwtProperties() {
     }
 
-    public JwtConfig(String id, String base64Secret, Long expiresSecond) {
+    public JwtProperties(String id, String base64Secret, Long expiresSecond) {
         this.id = id;
         this.base64Secret = base64Secret;
         this.expiresSecond = expiresSecond;
     }
 
-    public JwtConfig(String id, String base64Secret, String algo, Long expiresSecond) {
+    public JwtProperties(String id, String base64Secret, String algo, Long expiresSecond) {
         this.id = id;
         this.base64Secret = base64Secret;
         this.algo = algo;

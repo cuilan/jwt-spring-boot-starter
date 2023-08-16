@@ -1,42 +1,81 @@
-plugins {
-    id 'java'
-    id 'java-library'
-    id 'maven-publish'
-}
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+apply plugin: "io.spring.dependency-management"
 
-java {
-    // 指定编译器版本
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    // 指定目标版本
-    targetCompatibility = JavaVersion.VERSION_1_8
+// 编译脚本
+buildscript {
+    ext {
+        springBootVersion = '2.7.6'
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/repository/public/" }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 group = 'com.weattech.boot'
 version = '1.0.1'
+description = ""
 
-def springVersion = '2.7.6'
+// 指定编译器版本
+sourceCompatibility = JavaVersion.VERSION_1_8
+// 指定目标版本
+targetCompatibility = JavaVersion.VERSION_1_8
+
+// 任务设置字符编码
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// 设置仓库
+repositories {
+    mavenLocal()
+    // 私有仓库
+    maven { url "https://nexus.weattech.com/repository/weattech-releases/" }
+    maven { url "https://nexus.weattech.com/repository/weattech-releases/" }
+    maven { url "https://nexus.weattech.com/repository/weattech-snapshots/" }
+    maven { url "https://maven.aliyun.com/repository/public" }
+    mavenCentral()
+}
+
+// 依赖管理
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
 
 dependencies {
     // spring boot
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: springVersion
+    compileOnly("org.springframework.boot:spring-boot-autoconfigure")
+    compileOnly("org.springframework.boot:spring-boot-configuration-processor")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // tools
-    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+    api("io.jsonwebtoken:jjwt:0.9.1")
+    api("commons-beanutils:commons-beanutils:1.9.4")
 
     // lombok
-    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    compileOnly("org.projectlombok:lombok:1.18.22")
+    annotationProcessor("org.projectlombok:lombok:1.18.22")
 
     // test
-    testCompileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springVersion
-    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
-    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    testCompileOnly("org.springframework.boot:spring-boot-starter-test")
+    testCompileOnly("org.projectlombok:lombok:1.18.22")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
 }
 
 publishing {
     publications {
-        Jar(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
             groupId = project.group
             artifactId = project.name
