@@ -1,4 +1,4 @@
-package com.weattech.boot.jwt.exceptions;
+package cn.cuilan.boot.jwt.exceptions;
 
 /**
  * Jwt 异常

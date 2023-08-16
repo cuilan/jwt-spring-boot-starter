@@ -1,4 +1,4 @@
-package com.weattech.boot.jwt;
+package cn.cuilan.boot.jwt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

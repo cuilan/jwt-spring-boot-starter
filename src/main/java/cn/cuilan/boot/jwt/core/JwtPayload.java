@@ -1,4 +1,4 @@
-package com.weattech.boot.jwt.core;
+package cn.cuilan.boot.jwt.core;
 
 import lombok.Data;
 

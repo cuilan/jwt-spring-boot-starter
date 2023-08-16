@@ -1,7 +1,7 @@
-package com.weattech.boot.jwt.config;
+package cn.cuilan.boot.jwt.config;
 
-import com.weattech.boot.jwt.core.JwtPayload;
-import com.weattech.boot.jwt.core.JwtService;
+import cn.cuilan.boot.jwt.core.JwtPayload;
+import cn.cuilan.boot.jwt.core.JwtService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;

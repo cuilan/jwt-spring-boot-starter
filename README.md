@@ -3,18 +3,25 @@
 * Json Web Token `spring-boot-starter`
 * 基于 SpringBoot **2.7.6**
 * 提供 JWT 加解密服务
+* 适用于 SpringBoot 2.7.x
 
-## 引入
+## maven
 
 在 `pom.xml` 文件中加入如下依赖：
 
 ```xml
 
 <dependency>
-    <groupId>com.weattech.boot</groupId>
+    <groupId>cn.cuilan.boot</groupId>
     <artifactId>jwt-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
+```
+
+## gradle
+
+```groovy
+implementation("cn.cuilan.boot:jwt-spring-boot-starter:1.0.1")
 ```
 
 ## 配置
@@ -22,13 +29,14 @@
 在 `application.yaml` 或 `application-{env}.yaml` 文件中加入如下配置：
 
 ```yaml
-weattech:
-  jwt:
-    # 可选，默认配置：weattech-jwt
-    id: jwt-test
-    base64Secret: PnJ7gvAwryqKlUQeokI19aXN3fpz6c2t
-    # 可选，默认配置：3600，单位：秒
-    expiresSecond: 3400
+jwt:
+  # 可选，默认配置：custom-jwt
+  id: jwt-test
+  base64Secret: PnJ7gvAwryqKlUQeokI19aXN3fpz6c2t
+  # 可选，默认 HMAC-SHA256
+  algo: HS256
+  # 可选，默认配置：3600，单位：秒
+  expiresSecond: 3400
 ```
 
 ## 使用

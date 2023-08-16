@@ -8,7 +8,7 @@
         <version>2.7.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.weattech.boot</groupId>
+    <groupId>cn.cuilan.boot</groupId>
     <artifactId>jwt-spring-boot-starter</artifactId>
     <version>1.0.0</version>
     <name>jwt-spring-boot-starter</name>
@@ -71,33 +71,5 @@
             </plugin>
         </plugins>
     </build>
-
-
-    <repositories>
-        <repository>
-            <id>alimaven</id>
-            <name>aliyun maven</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>weattech-group</id>
-            <name>weattech repo</name>
-            <url>https://nexus.weattech.com/repository/weattech-group/</url>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>weattech-releases</id>
-            <name>weattech releases repo</name>
-            <url>https://nexus.weattech.com/repository/weattech-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>weattech-snapshots</id>
-            <name>weattech snapshots repo</name>
-            <url>https://nexus.weattech.com/repository/weattech-snapshots/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>

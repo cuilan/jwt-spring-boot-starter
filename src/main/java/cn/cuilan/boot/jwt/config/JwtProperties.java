@@ -1,4 +1,4 @@
-package com.weattech.boot.jwt.config;
+package cn.cuilan.boot.jwt.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -18,13 +18,13 @@ public class JwtProperties {
     /**
      * 配置文件前缀
      */
-    public static final String PREFIX = "weattech.jwt";
+    public static final String PREFIX = "jwt";
     public static final String BASE64_SECRET_NAME = "base64Secret";
 
     /**
      * jwt唯一id
      */
-    private String id = "weattech-jwt";
+    private String id = "custom-jwt";
 
     /**
      * 加密

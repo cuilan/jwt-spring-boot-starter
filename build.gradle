@@ -21,7 +21,7 @@ buildscript {
     }
 }
 
-group = 'com.weattech.boot'
+group = 'cn.cuilan.boot'
 version = '1.0.1'
 description = ""
 
@@ -38,10 +38,6 @@ tasks.withType(JavaCompile).configureEach {
 // 设置仓库
 repositories {
     mavenLocal()
-    // 私有仓库
-    maven { url "https://nexus.weattech.com/repository/weattech-releases/" }
-    maven { url "https://nexus.weattech.com/repository/weattech-releases/" }
-    maven { url "https://nexus.weattech.com/repository/weattech-snapshots/" }
     maven { url "https://maven.aliyun.com/repository/public" }
     mavenCentral()
 }
@@ -84,30 +80,6 @@ publishing {
     }
     repositories {
         mavenLocal()
-        maven {
-            name "weattech-group"
-            url "https://nexus.weattech.com/repository/weattech-releases/"
-            credentials {
-                username 'weattech'
-                password 'WeattechDev'
-            }
-        }
-        maven {
-            name "weattech-releases"
-            url "https://nexus.weattech.com/repository/weattech-releases/"
-            credentials {
-                username 'weattech'
-                password 'WeattechDev'
-            }
-        }
-        maven {
-            name "weattech-snapshots"
-            url "https://nexus.weattech.com/repository/weattech-snapshots/"
-            credentials {
-                username 'weattech'
-                password 'WeattechDev'
-            }
-        }
     }
 }
 

@@ -3,12 +3,11 @@ spring:
   application:
     name: jwt-spring-boot-starter
 
-weattech:
-  jwt:
-    # 可选，默认配置：weattech-jwt
-    id: jwt-test
-    base64Secret: PnJ7gvAwryqKlUQeokI19aXN3fpz6c2t
-    # 可选，默认 HMAC-SHA256
-    algo: HS256
-    # 可选，默认配置：3600，单位：秒
-    expiresSecond: 3400
+jwt:
+  # 可选，默认配置：custom-jwt
+  id: jwt-test
+  base64Secret: PnJ7gvAwryqKlUQeokI19aXN3fpz6c2t
+  # 可选，默认 HMAC-SHA256
+  algo: HS256
+  # 可选，默认配置：3600，单位：秒
+  expiresSecond: 3400

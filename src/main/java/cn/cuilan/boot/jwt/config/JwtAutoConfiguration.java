@@ -1,6 +1,6 @@
-package com.weattech.boot.jwt.config;
+package cn.cuilan.boot.jwt.config;
 
-import com.weattech.boot.jwt.core.JwtService;
+import cn.cuilan.boot.jwt.core.JwtService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

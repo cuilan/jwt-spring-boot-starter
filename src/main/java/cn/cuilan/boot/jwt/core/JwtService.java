@@ -1,7 +1,7 @@
-package com.weattech.boot.jwt.core;
+package cn.cuilan.boot.jwt.core;
 
-import com.weattech.boot.jwt.config.JwtProperties;
-import com.weattech.boot.jwt.exceptions.TokenException;
+import cn.cuilan.boot.jwt.config.JwtProperties;
+import cn.cuilan.boot.jwt.exceptions.TokenException;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;

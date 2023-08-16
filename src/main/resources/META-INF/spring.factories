@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.weattech.boot.jwt.config.JwtAutoConfiguration
+cn.cuilan.boot.jwt.config.JwtAutoConfiguration
