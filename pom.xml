@@ -10,7 +10,7 @@
     </parent>
     <groupId>cn.cuilan.boot</groupId>
     <artifactId>jwt-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>jwt-spring-boot-starter</name>
     <description>JWT for Spring Boot Starter</description>
 
@@ -24,6 +24,7 @@
         <spring-boot.version>2.7.6</spring-boot.version>
         <jjwt.version>0.9.1</jjwt.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <lombok.version>1.18.22</lombok.version>
     </properties>
 
     <dependencies>
@@ -47,6 +48,12 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
+        </dependency>
+        <!--lm-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
 
         <!-- test -->
