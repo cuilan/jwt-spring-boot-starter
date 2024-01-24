@@ -22,7 +22,7 @@ buildscript {
 }
 
 group = 'cn.cuilan.boot'
-version = '1.0.1'
+version = 'spring-2.7.x'
 description = ""
 
 // 指定编译器版本
