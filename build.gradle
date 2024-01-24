@@ -6,7 +6,7 @@ apply plugin: "io.spring.dependency-management"
 // 编译脚本
 buildscript {
     ext {
-        springBootVersion = '2.7.6'
+        springBootVersion = '3.1.5'
     }
 
     repositories {
@@ -22,7 +22,7 @@ buildscript {
 }
 
 group = 'cn.cuilan.boot'
-version = 'spring-2.7.x'
+version = 'spring-3.1.x'
 description = ""
 
 // 指定编译器版本
@@ -56,17 +56,18 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // tools
-    api("io.jsonwebtoken:jjwt:0.9.1")
-    api("commons-beanutils:commons-beanutils:1.9.4")
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3' // or 'io.jsonwebtoken:jjwt-gson:0.12.3' for gson
 
     // lombok
-    compileOnly("org.projectlombok:lombok:1.18.22")
-    annotationProcessor("org.projectlombok:lombok:1.18.22")
+    compileOnly("org.projectlombok:lombok:1.18.28")
+    annotationProcessor("org.projectlombok:lombok:1.18.28")
 
     // test
     testCompileOnly("org.springframework.boot:spring-boot-starter-test")
-    testCompileOnly("org.projectlombok:lombok:1.18.22")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
+    testCompileOnly("org.projectlombok:lombok:1.18.28")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.28")
 }
 
 publishing {

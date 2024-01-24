@@ -32,9 +32,9 @@ public class JwtProperties {
     private String base64Secret;
 
     /**
-     * 加密签名算法
+     * mac算法
      */
-    private String algo;
+    private String mac;
 
     /**
      * 过期时间，单位秒
@@ -50,10 +50,10 @@ public class JwtProperties {
         this.expiresSecond = expiresSecond;
     }
 
-    public JwtProperties(String id, String base64Secret, String algo, Long expiresSecond) {
+    public JwtProperties(String id, String base64Secret, String mac, Long expiresSecond) {
         this.id = id;
         this.base64Secret = base64Secret;
-        this.algo = algo;
+        this.mac = mac;
         this.expiresSecond = expiresSecond;
     }
 

@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.cuilan.boot.jwt.config.JwtAutoConfiguration

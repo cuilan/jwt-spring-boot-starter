@@ -1,27 +1,37 @@
 # jwt-spring-boot-starter
 
 * Json Web Token `spring-boot-starter`
-* 基于 SpringBoot **2.7.6**
 * 提供 JWT 加解密服务
-* 适用于 SpringBoot 2.7.x
+* SpringBoot2.7.x、SpringBoot3.1.x 已适配
 
 ## maven
 
 在 `pom.xml` 文件中加入如下依赖：
 
 ```xml
-
+<!-- SpringBoot 2.7.x -->
 <dependency>
     <groupId>cn.cuilan.boot</groupId>
     <artifactId>jwt-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <version>spring-2.7.x</version>
+</dependency>
+
+<!-- SpringBoot 3.1.x -->
+<dependency>
+<groupId>cn.cuilan.boot</groupId>
+<artifactId>jwt-spring-boot-starter</artifactId>
+<version>spring-3.1.x</version>
 </dependency>
 ```
 
 ## gradle
 
 ```groovy
-implementation("cn.cuilan.boot:jwt-spring-boot-starter:1.0.1")
+// SpringBoot 2.7.x
+implementation("cn.cuilan.boot:jwt-spring-boot-starter:spring-2.7.x")
+
+// SpringBoot 3.1.x
+implementation("cn.cuilan.boot:jwt-spring-boot-starter:spring-3.1.x")
 ```
 
 ## 配置
@@ -32,11 +42,12 @@ implementation("cn.cuilan.boot:jwt-spring-boot-starter:1.0.1")
 jwt:
   # 可选，默认配置：custom-jwt
   id: jwt-test
-  base64Secret: PnJ7gvAwryqKlUQeokI19aXN3fpz6c2t
-  # 可选，默认 HMAC-SHA256
-  algo: HS256
+  # 长度64
+  base64Secret: PnJ7gvAwryqKlUQeokI19aXN3fpz6c2tPnJ7gvAwryqKlUQeokI19aXN3fpz6c2t
+  # 可选，默认 HS256，可选：HS256、HS384、HS512
+  mac: HS256
   # 可选，默认配置：3600，单位：秒
-  expiresSecond: 3400
+  expiresSecond: 3600
 ```
 
 ## 使用
@@ -56,7 +67,7 @@ public class JwtConfigTest {
 
     // 解密
     public void testGetPayload() {
-        JwtPayload payload = jwtService.getPayload("token_string", JwtPayload.class);
+        JwtPayload payload = jwtService.getPayload("token_string");
         System.out.println("userId: " + payload.getUserId() + ", loginSign: " + payload.getLoginSign());
     }
 
